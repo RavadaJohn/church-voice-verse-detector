@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Church Voice Detector</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Church Voice Verse Detector</h1>
+
+        <button id="startBtn">🎤 Start Listening</button>
+
+        <h2>Pastor Speech:</h2>
+
+        <div id="speechText"></div>
+
+        <h2>Detected Bible Verses:</h2>
+
+        <div id="results"></div>
+
+    </div>
+
+<script>
+
+const startBtn = document.getElementById("startBtn");
+
+const speechText = document.getElementById("speechText");
+
+const results = document.getElementById("results");
+
+const SpeechRecognition =
+window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const recognition = new SpeechRecognition();
+
+recognition.continuous = true;
+
+recognition.interimResults = true;
+
+recognition.lang = "en-US";
+
+startBtn.addEventListener("click", function() {
+
+    recognition.start();
+
+});
+
+recognition.onresult = async function(event) {
+
+    let transcript = "";
+
+    for (let i = 0; i < event.results.length; i++) {
+
+        transcript += event.results[i][0].transcript;
+
+    }
+
+    speechText.innerHTML = transcript;
+
+    const response = await fetch("/detect", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({ text: transcript })
+
+    });
+
+    const data = await response.json();
+
+    results.innerHTML = "";
+
+    data.results.forEach(function(item) {
+
+        results.innerHTML = `
+
+        <div class="verseBox">
+
+            <h3>${item.reference}</h3>
+
+            <p>${item.text}</p>
+
+        </div>
+
+        `;
+
+    });
+
+};
+
+</script>
+
+</body>
+
+</html>

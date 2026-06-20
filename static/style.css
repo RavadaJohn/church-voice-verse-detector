@@ -1,0 +1,51 @@
+
+body {
+
+    background-color: black;
+    color: white;
+    font-family: Arial;
+    text-align: center;
+    padding-top: 40px;
+
+}
+
+button {
+
+    padding: 15px 25px;
+    font-size: 22px;
+    cursor: pointer;
+
+}
+
+#speechText {
+
+    margin-top: 30px;
+    font-size: 28px;
+    color: lightgreen;
+    padding: 20px;
+
+}
+
+.verseBox {
+
+    border: 2px solid yellow;
+    margin: 20px auto;
+    padding: 20px;
+    width: 70%;
+    border-radius: 10px;
+
+}
+
+h3 {
+
+    color: orange;
+    font-size: 30px;
+
+}
+
+p {
+
+    color: yellow;
+    font-size: 28px;
+
+}
